@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E8D649982D6C9479002FE46C /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = E8D649972D6C9479002FE46C /* Quick */; };
+		E8D6499B2D6C94FE002FE46C /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = E8D6499A2D6C94FE002FE46C /* Quick */; };
+		E8D6499E2D6C95B9002FE46C /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = E8D6499D2D6C95B9002FE46C /* Nimble */; };
+		E8D649A02D6C95C2002FE46C /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = E8D6499F2D6C95C2002FE46C /* Nimble */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E8D649392D6C882C002FE46C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -59,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8D6499B2D6C94FE002FE46C /* Quick in Frameworks */,
+				E8D6499E2D6C95B9002FE46C /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8D649982D6C9479002FE46C /* Quick in Frameworks */,
+				E8D649A02D6C95C2002FE46C /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +89,7 @@
 				E8D649292D6C882B002FE46C /* PokemonTCG */,
 				E8D6493B2D6C882C002FE46C /* PokemonTCGTests */,
 				E8D649452D6C882C002FE46C /* PokemonTCGUITests */,
+				E8D649992D6C94FE002FE46C /* Frameworks */,
 				E8D649282D6C882B002FE46C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +102,13 @@
 				E8D649422D6C882C002FE46C /* PokemonTCGUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E8D649992D6C94FE002FE46C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +154,8 @@
 			);
 			name = PokemonTCGTests;
 			packageProductDependencies = (
+				E8D6499A2D6C94FE002FE46C /* Quick */,
+				E8D6499D2D6C95B9002FE46C /* Nimble */,
 			);
 			productName = PokemonTCGTests;
 			productReference = E8D649382D6C882C002FE46C /* PokemonTCGTests.xctest */;
@@ -158,6 +179,8 @@
 			);
 			name = PokemonTCGUITests;
 			packageProductDependencies = (
+				E8D649972D6C9479002FE46C /* Quick */,
+				E8D6499F2D6C95C2002FE46C /* Nimble */,
 			);
 			productName = PokemonTCGUITests;
 			productReference = E8D649422D6C882C002FE46C /* PokemonTCGUITests.xctest */;
@@ -195,6 +218,10 @@
 			);
 			mainGroup = E8D6491E2D6C882B002FE46C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E8D649962D6C9479002FE46C /* XCRemoteSwiftPackageReference "Quick" */,
+				E8D6499C2D6C95B9002FE46C /* XCRemoteSwiftPackageReference "Nimble" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E8D649282D6C882B002FE46C /* Products */;
 			projectDirPath = "";
@@ -591,6 +618,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E8D649962D6C9479002FE46C /* XCRemoteSwiftPackageReference "Quick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Quick";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		E8D6499C2D6C95B9002FE46C /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E8D649972D6C9479002FE46C /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8D649962D6C9479002FE46C /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+		E8D6499A2D6C94FE002FE46C /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8D649962D6C9479002FE46C /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+		E8D6499D2D6C95B9002FE46C /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8D6499C2D6C95B9002FE46C /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+		E8D6499F2D6C95C2002FE46C /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8D6499C2D6C95B9002FE46C /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E8D6491F2D6C882B002FE46C /* Project object */;
 }
