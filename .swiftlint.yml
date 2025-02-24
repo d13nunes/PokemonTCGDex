@@ -1,0 +1,10 @@
+included:
+  - SoupLetter/Source
+  - SoupLetterTests
+  - SoupLetterUITests
+disabled_rules:
+  - opening_brace
+  - trailing_comma
+identifier_name:
+  excluded:
+    - id
