@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E86243162D6CEFA800805AB8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E86243152D6CEFA800805AB8 /* Kingfisher */; };
 		E8D649982D6C9479002FE46C /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = E8D649972D6C9479002FE46C /* Quick */; };
 		E8D6499B2D6C94FE002FE46C /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = E8D6499A2D6C94FE002FE46C /* Quick */; };
 		E8D6499E2D6C95B9002FE46C /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = E8D6499D2D6C95B9002FE46C /* Nimble */; };
@@ -42,16 +43,6 @@
 			path = PokemonTCG;
 			sourceTree = "<group>";
 		};
-		E8D6493B2D6C882C002FE46C /* PokemonTCGTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PokemonTCGTests;
-			sourceTree = "<group>";
-		};
-		E8D649452D6C882C002FE46C /* PokemonTCGUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PokemonTCGUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E86243162D6CEFA800805AB8 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,8 +79,6 @@
 			isa = PBXGroup;
 			children = (
 				E8D649292D6C882B002FE46C /* PokemonTCG */,
-				E8D6493B2D6C882C002FE46C /* PokemonTCGTests */,
-				E8D649452D6C882C002FE46C /* PokemonTCGUITests */,
 				E8D649992D6C94FE002FE46C /* Frameworks */,
 				E8D649282D6C882B002FE46C /* Products */,
 			);
@@ -131,6 +121,7 @@
 			);
 			name = PokemonTCG;
 			packageProductDependencies = (
+				E86243152D6CEFA800805AB8 /* Kingfisher */,
 			);
 			productName = PokemonTCG;
 			productReference = E8D649272D6C882B002FE46C /* PokemonTCG.app */;
@@ -148,9 +139,6 @@
 			);
 			dependencies = (
 				E8D6493A2D6C882C002FE46C /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				E8D6493B2D6C882C002FE46C /* PokemonTCGTests */,
 			);
 			name = PokemonTCGTests;
 			packageProductDependencies = (
@@ -173,9 +161,6 @@
 			);
 			dependencies = (
 				E8D649442D6C882C002FE46C /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				E8D649452D6C882C002FE46C /* PokemonTCGUITests */,
 			);
 			name = PokemonTCGUITests;
 			packageProductDependencies = (
@@ -221,6 +206,7 @@
 			packageReferences = (
 				E8D649962D6C9479002FE46C /* XCRemoteSwiftPackageReference "Quick" */,
 				E8D6499C2D6C95B9002FE46C /* XCRemoteSwiftPackageReference "Nimble" */,
+				E86243142D6CEE9400805AB8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E8D649282D6C882B002FE46C /* Products */;
@@ -620,6 +606,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E86243142D6CEE9400805AB8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
 		E8D649962D6C9479002FE46C /* XCRemoteSwiftPackageReference "Quick" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Quick";
@@ -639,6 +633,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E86243152D6CEFA800805AB8 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E86243142D6CEE9400805AB8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		E8D649972D6C9479002FE46C /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E8D649962D6C9479002FE46C /* XCRemoteSwiftPackageReference "Quick" */;
