@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "SweetPad: Build",
+      "type": "sweetpad",
+      "action": "launch",
+      "problemMatcher": [
+        "-watch",
+        "-xcodebuild-default",
+        "-xcbeautify-errors",
+        "-xcbeautify-warnings"
+      ],
+      "scheme": "terminal23",
+      "configuration": "Debug"
+    }
+  ]
+}
