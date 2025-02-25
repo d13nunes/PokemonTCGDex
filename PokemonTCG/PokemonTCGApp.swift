@@ -39,11 +39,13 @@ struct PokemonTCGApp: App {
             switch route {
             case .cardList:
               CardListView(viewModel: cardListViewModel)
-            case .cardDetails(let cardId):
-              Text("Card Details: \(cardId)")
-              Button("Back") {
-                appState.eventPublisher.send(.navigateBack)
-              }
+            case .cardDetails(let card):
+              CardDetailsView(
+                viewModel: CardDetailsViewModel(
+                  apiClient: apiClient,
+                  card: card
+                )
+              )
             }
           }
       }

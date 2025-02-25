@@ -17,7 +17,12 @@ struct CardItemView: View {
     if showError {
       failureImage
     } else {
-      cardImage
+      CardImage(
+        card: card,
+        imageCardWidth: imageCardWidth,
+        imageCardHeight: imageCardHeight,
+        placeholderImage: placeholderImage
+      )
     }
   }
 
@@ -53,21 +58,7 @@ struct CardItemView: View {
         .padding(.bottom)
     }
   }
-  private var cardImage: some View {
-    KFImage.url(card.highQualityImageURL)
-      .onFailure { error in
-        showError = true
-        debugPrint(
-          "🚩Error loading image from url: \(String(describing: card.highQualityImageURL)) with error: \(error)"
-        )
-      }
-      .placeholder {
-        placeholderImage
-      }
-      .resizable()
-      .scaledToFit()
-      .frame(width: imageCardWidth, height: imageCardHeight)
-  }
+
 }
 
 #Preview {

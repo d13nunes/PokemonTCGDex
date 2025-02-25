@@ -7,5 +7,5 @@ protocol APIClient {
     sortField: SortField?,
     sortOrder: SortOrder?
   ) async throws -> PaginatedResponse<[PokemonCard]>
-  func fetchCardDetails(cardId: String) async throws -> PokemonCard
+  func fetchCardDetail(cardId: String) async throws -> CardDetail
 }

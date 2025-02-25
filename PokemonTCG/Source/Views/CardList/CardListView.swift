@@ -71,7 +71,7 @@ struct CardListView: View {
         ForEach(viewModel.cards) { card in
           CardItemView(card: card, width: 90, height: 130)
             .onTapGesture {
-              viewModel.onCardSelected(cardId: card.id)
+              viewModel.onCardSelected(card: card)
             }
             .onAppear {
               if card == viewModel.cards.last && viewModel.hasMorePages {

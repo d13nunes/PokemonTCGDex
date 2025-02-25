@@ -1,4 +1,6 @@
+import Foundation
+
 enum AppRoute: Hashable {
   case cardList
-  case cardDetails(cardId: String)
+  case cardDetails(card: PokemonCard)
 }

@@ -1,5 +1,7 @@
+import Foundation
+
 enum AppEvent {
   case showCardList
-  case showCardDetails(cardId: String)
+  case showCardDetails(card: PokemonCard)
   case navigateBack
 }

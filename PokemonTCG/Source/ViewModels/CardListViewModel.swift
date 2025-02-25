@@ -94,8 +94,8 @@ class CardListViewModel {
     }
   }
 
-  func onCardSelected(cardId: String) {
-    eventPublisher.send(.showCardDetails(cardId: cardId))
+  func onCardSelected(card: PokemonCard) {
+    eventPublisher.send(.showCardDetails(card: card))
   }
 
   private func canFetchCards(query: String, loadMore: Bool = false) -> Bool {

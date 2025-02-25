@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - PokemonCard
-struct PokemonCard: Codable, Identifiable, Equatable {
+struct PokemonCard: Codable, Identifiable, Equatable, Hashable {
   let id: String
   let name: String
   let image: String?
@@ -29,6 +29,10 @@ struct PokemonCard: Codable, Identifiable, Equatable {
     return URL(string: absoluteURLString)
   }
 
+  // Add if custom hashing is needed:
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
 }
 
 enum ImageQuality: String {

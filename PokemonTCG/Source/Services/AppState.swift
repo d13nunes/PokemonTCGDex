@@ -29,8 +29,8 @@ class AppState {
     switch event {
     case .showCardList:
       navigationPath = [.cardList]
-    case .showCardDetails(let cardId):
-      navigationPath = [.cardDetails(cardId: cardId)]
+    case .showCardDetails(let card):
+      navigationPath = [.cardDetails(card: card)]
     case .navigateBack:
       navigationPath.removeLast()
     }

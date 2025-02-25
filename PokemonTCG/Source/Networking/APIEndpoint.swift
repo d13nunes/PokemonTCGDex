@@ -19,7 +19,7 @@ enum APIEndpoint {
     sortField: SortField?,
     sortOrder: SortOrder?
   )
-  case card(cardId: String)
+  case cardDetail(cardId: String)
 
   var url: URL {
     var components = URLComponents()
@@ -50,7 +50,7 @@ enum APIEndpoint {
 
       components.queryItems = queryItems.isEmpty ? nil : queryItems
 
-    case .card(let cardId):
+    case .cardDetail(let cardId):
       components.path = "/v2/en/cards/\(cardId)"
     }
 
