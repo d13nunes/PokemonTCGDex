@@ -5,7 +5,7 @@ struct CardDetail: Codable {
   let category: String
   let id: String
   let illustrator: String?
-  let image: String
+  let image: String?
   let localId: String
   let name: String
   let rarity: String?
@@ -131,7 +131,7 @@ struct PokemonCardDetail: Codable {
       let container = try decoder.container(keyedBy: CodingKeys.self)
 
       name = try container.decode(String.self, forKey: .name)
-      cost = try container.decode([String].self, forKey: .cost)
+      cost = try container.decodeIfPresent([String].self, forKey: .cost) ?? []
       effect = try container.decodeIfPresent(String.self, forKey: .effect)
 
       // Handle damage that could be either Int or String

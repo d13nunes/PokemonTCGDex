@@ -3,18 +3,13 @@ import SwiftUI
 
 struct CardImage<Placeholder: View>: View {
   let card: PokemonCard
-  let imageCardWidth: CGFloat
-  let imageCardHeight: CGFloat
   let placeholderImage: Placeholder
+
   init(
     card: PokemonCard,
-    imageCardWidth: CGFloat,
-    imageCardHeight: CGFloat,
     placeholderImage: Placeholder
   ) {
     self.card = card
-    self.imageCardWidth = imageCardWidth
-    self.imageCardHeight = imageCardHeight
     self.placeholderImage = placeholderImage
   }
 
@@ -33,6 +28,5 @@ struct CardImage<Placeholder: View>: View {
       }
       .resizable()
       .scaledToFit()
-      .frame(width: imageCardWidth, height: imageCardHeight)
   }
 }

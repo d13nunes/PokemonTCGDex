@@ -3,15 +3,7 @@ import SwiftUI
 
 struct CardDetailsView: View {
   @State private var viewModel: CardDetailsViewModel
-
-  private var isLoading: Bool {
-    switch viewModel.loadingState {
-    case .loading:
-      return true
-    case .idle, .error, .loaded:
-      return false
-    }
-  }
+  @State private var isLoading: Bool = false
 
   init(viewModel: CardDetailsViewModel) {
     self._viewModel = State(initialValue: viewModel)
@@ -23,30 +15,45 @@ struct CardDetailsView: View {
         // Card Image
         CardImage(
           card: viewModel.card,
-          imageCardWidth: 400,
-          imageCardHeight: 400,
           placeholderImage: ProgressView()
         )
+        if viewModel.loadingState == .loading {
+          ProgressView()
+        }
+        if case .error(let error) = viewModel.loadingState {
+          ErrorView(
+            message: error.localizedDescription,
+            onRetry: {
+              viewModel.reloadAfterError()
+            }
+          )
+        }
         if let info = viewModel.commonInformation {
           commonInformation(info)
-            .padding()
         }
         if let info = viewModel.pokemonInformation {
           pokemonInformation(info)
-            .padding()
         }
         if let info = viewModel.trainerInformation {
           trainerInformation(info)
-            .padding()
         }
         if let info = viewModel.energyInformation {
           energyInformation(info)
-            .padding()
         }
       }
+      .padding()
     }
     .onAppear {
       viewModel.onViewAppeared()
+    }
+    .onChange(of: viewModel.loadingState) { oldValue, newValue in
+      print("loadingState: \(oldValue) -> \(newValue)")
+      switch newValue {
+      case .loading:
+        isLoading = true
+      case .idle, .error, .loaded:
+        isLoading = false
+      }
     }
     .navigationTitle(viewModel.cardName)
   }

@@ -31,13 +31,7 @@ class CardListViewModel {
 
   private let queryRequestPublisher = PassthroughSubject<String, Never>()
   private let pageSize: Int
-  // Computed properties for view state
-  var showFullScreenLoading: Bool {
-    guard case .loading = loadingState else { return false }
-    return cards.isEmpty
-  }
 
-  // Pagination state
   private let apiClient: APIClient
   private let eventPublisher: PassthroughSubject<AppEvent, Never>
   private var cancellables = Set<AnyCancellable>()
@@ -45,7 +39,7 @@ class CardListViewModel {
   init(
     apiClient: APIClient,
     eventPublisher: PassthroughSubject<AppEvent, Never>,
-    pageSize: Int = 100
+    pageSize: Int = 40
   ) {
     self.apiClient = apiClient
     self.eventPublisher = eventPublisher

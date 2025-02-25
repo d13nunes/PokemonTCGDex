@@ -25,26 +25,27 @@ class CardDetailsViewModel {
   }
 
   func onViewAppeared() {
+    loadCardDetail()
+  }
+
+  func reloadAfterError() {
+    loadCardDetail()
+  }
+
+  private func loadCardDetail() {
     loadingState = .loading
+    errorMessage = nil
     Task {
       do {
         self.cardDetail = try await apiClient.fetchCardDetail(cardId: card.id)
         print("🚩CardDetailsViewModel cardDetail: \(cardDetail)")
         loadingState = .loaded
+        errorMessage = nil
       } catch {
         print("Error fetching card details: \(error)")
         errorMessage = "Error fetching card details"
         loadingState = .error(error)
       }
     }
-  }
-
-  // Add any additional methods for card detail interactions here
-  func shareCard() {
-    // Implementation for sharing card details
-  }
-
-  func addToFavorites() {
-    // Implementation for adding card to favorites
   }
 }

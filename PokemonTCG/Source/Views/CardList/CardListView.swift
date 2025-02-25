@@ -4,72 +4,84 @@ import SwiftUI
 struct CardListView: View {
   @State private var viewModel: CardListViewModel
   @State private var searchQuery: String = ""
-
-  private var showNoResults: Bool {
-    switch viewModel.loadingState {
-    case .loaded:
-      return viewModel.cards.isEmpty && !searchQuery.isEmpty
-    default:
-      return false
-    }
-  }
+  @State private var showNoResults: Bool = false
+  @State private var isLoading: Bool = false
+  @State private var isDisabled: Bool = false
+  @FocusState private var isFocused: Bool
 
   init(viewModel: CardListViewModel) {
     self._viewModel = State(initialValue: viewModel)
   }
 
   var body: some View {
-    NavigationStack {
-      ZStack {
-        VStack {
-          filterView
-          cardList
-        }
-
-        if viewModel.showFullScreenLoading {
-          ProgressView {
-            Text("Loading...")
+    VStack {
+      filterView
+        .disabled(isDisabled)
+        .padding(.horizontal)
+      cardList
+    }
+    .overlay(showNoResults ? noResults : nil)
+    .overlay {
+      if let errorMessage = viewModel.errorMessage {
+        ErrorView(
+          message: errorMessage,
+          onRetry: {
+            viewModel.reloadAfterError()
           }
-          .colorInvert()
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
+        )
       }
-      .overlay(showNoResults ? noResults : nil)
-      .overlay {
-        if let errorMessage = viewModel.errorMessage {
-          ErrorView(
-            message: errorMessage,
-            onRetry: {
-              viewModel.reloadAfterError()
-            }
-          )
-        }
+    }
+    .overlay {
+      if isLoading && viewModel.cards.isEmpty {
+        ProgressView()
+          .padding()
       }
-      .navigationTitle("Pokemon Cards")
-      .searchable(text: $searchQuery, prompt: "Search by name...")
-      .onChange(of: searchQuery) { oldValue, newValue in
-        guard oldValue != newValue else { return }
-        viewModel.requestQuery(query: newValue)
+    }
+    .navigationTitle("Pokemon Cards")
+    .searchable(text: $searchQuery, prompt: "Search by name...")
+    .onChange(of: searchQuery) { oldValue, newValue in
+      guard oldValue != newValue else { return }
+      viewModel.requestQuery(query: newValue)
+    }
+    .onChange(of: viewModel.loadingState) { _, newValue in
+      switch newValue {
+      case .loaded:
+        showNoResults = viewModel.cards.isEmpty && !searchQuery.isEmpty
+        isLoading = false
+        isDisabled = showNoResults
+      case .loading:
+        isLoading = true
+        isDisabled = true
+        showNoResults = false
+      case .error, .idle:
+        isLoading = false
+        isDisabled = false
+        showNoResults = false
       }
     }
     .onAppear {
       viewModel.onViewAppeared()
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        isFocused = true
+        isFocused = false
+      }
     }
   }
 
   private var noResults: some View {
-    Text("No results found")
+    Text("No results found for \"\(searchQuery)\"")
       .font(.headline)
       .padding()
   }
+
   private var cardList: some View {
     ScrollView {
       LazyVGrid(
-        columns: Array(repeating: GridItem(.fixed(90)), count: 4),
+        columns: Array(repeating: GridItem(.flexible()), count: 4),
         spacing: 2
       ) {
         ForEach(viewModel.cards) { card in
-          CardItemView(card: card, width: 90, height: 130)
+          CardItemView(card: card)
             .onTapGesture {
               viewModel.onCardSelected(card: card)
             }
@@ -81,42 +93,28 @@ struct CardListView: View {
         }
       }
       .padding()
-
-      if viewModel.loadingState == .loading && !viewModel.cards.isEmpty {
+      if isLoading && !viewModel.cards.isEmpty {
         ProgressView()
           .padding()
       }
     }
-    .refreshable {
-      viewModel.onRefresh()
-    }
-  }
-
-  private var sortPicker: some View {
-    Picker("Sort by", selection: $viewModel.selectedSortField) {
-      ForEach(viewModel.availableSortFields, id: \.self) { field in
-        Text(field.rawValue.capitalized)
-      }
-    }
-    .pickerStyle(.segmented)
-  }
-
-  private var sortOrderPicker: some View {
-    Picker("Sort order", selection: $viewModel.selectedSortOrder) {
-      ForEach(viewModel.availableSortOrders, id: \.self) { order in
-        Text(order.rawValue.capitalized)
-      }
-    }
-    .pickerStyle(.segmented)
   }
 
   private var filterView: some View {
     HStack {
-      sortPicker
-      sortOrderPicker
+      Picker("Sort by", selection: $viewModel.selectedSortField) {
+        ForEach(viewModel.availableSortFields, id: \.self) { field in
+          Text(field.rawValue.capitalized)
+        }
+      }
+      .pickerStyle(.segmented)
+      Picker("Sort order", selection: $viewModel.selectedSortOrder) {
+        ForEach(viewModel.availableSortOrders, id: \.self) { order in
+          Text(order.rawValue.capitalized)
+        }
+      }
+      .pickerStyle(.segmented)
     }
-    .disabled(viewModel.loadingState == .loading)
-    .padding(.horizontal, 24)
   }
 }
 

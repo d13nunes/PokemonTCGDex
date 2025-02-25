@@ -3,14 +3,10 @@ import SwiftUI
 
 struct CardItemView: View {
   let card: PokemonCard
-  let imageCardWidth: CGFloat
-  let imageCardHeight: CGFloat
   @State private var showError: Bool = false
 
-  init(card: PokemonCard, width: CGFloat = 245, height: CGFloat = 337) {
+  init(card: PokemonCard) {
     self.card = card
-    self.imageCardWidth = width
-    self.imageCardHeight = height
   }
 
   var body: some View {
@@ -19,8 +15,6 @@ struct CardItemView: View {
     } else {
       CardImage(
         card: card,
-        imageCardWidth: imageCardWidth,
-        imageCardHeight: imageCardHeight,
         placeholderImage: placeholderImage
       )
     }
@@ -33,12 +27,10 @@ struct CardItemView: View {
         .resizable()
         .aspectRatio(contentMode: .fit)
         .foregroundColor(.red)
-        .frame(maxWidth: imageCardWidth * 0.1, maxHeight: imageCardHeight * 0.1)
         .padding(.top, 8)
         .padding(.trailing, 8)
     }
     .aspectRatio(contentMode: .fit)
-    .frame(width: imageCardWidth, height: imageCardHeight)
   }
 
   private var placeholderImage: some View {
