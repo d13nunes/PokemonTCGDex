@@ -26,7 +26,9 @@ struct CardImage<Placeholder: View>: View {
       .placeholder {
         placeholderImage
       }
+      .startLoadingBeforeViewAppear(true)
       .resizable()
+      .transition(.opacity)
       .scaledToFit()
   }
 }

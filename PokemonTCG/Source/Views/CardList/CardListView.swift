@@ -66,13 +66,14 @@ struct CardListView: View {
         columns: Array(repeating: GridItem(.flexible()), count: 4),
         spacing: 2
       ) {
-        ForEach(viewModel.cards) { card in
-          CardItemView(card: card)
+        ForEach(viewModel.cards.indices, id: \.self) { index in
+          CardItemView(card: viewModel.cards[index])
             .onTapGesture {
-              viewModel.onCardSelected(card: card)
+              viewModel.onCardSelected(card: viewModel.cards[index])
             }
             .onAppear {
-              if card == viewModel.cards.last && viewModel.hasMorePages {
+              let percentage = Double(index) / Double(viewModel.cards.count)
+              if percentage > 0.6 && viewModel.hasMorePages {
                 viewModel.loadMoreCards()
               }
             }

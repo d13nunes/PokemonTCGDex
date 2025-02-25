@@ -39,7 +39,7 @@ class CardListViewModel {
   init(
     apiClient: APIClient,
     eventPublisher: PassthroughSubject<AppEvent, Never>,
-    pageSize: Int = 40
+    pageSize: Int = 80
   ) {
     self.apiClient = apiClient
     self.eventPublisher = eventPublisher
