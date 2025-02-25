@@ -12,7 +12,6 @@ struct CardDetailsView: View {
   var body: some View {
     ScrollView {
       VStack(spacing: 20) {
-        // Card Image
         CardImage(
           card: viewModel.card,
           placeholderImage: ProgressView()
@@ -229,7 +228,6 @@ private struct DetailRow<Content: View>: View {
     image: "https://assets.tcgdex.net/en/bw/bw6/117"
   )
 
-  // let card = pokemon
   let card = energyCard
   NavigationStack {
     CardDetailsView(viewModel: CardDetailsViewModel(apiClient: TCGDexAPIClient(), card: card))

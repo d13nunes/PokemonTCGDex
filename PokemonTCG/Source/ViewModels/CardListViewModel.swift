@@ -4,7 +4,7 @@ import Foundation
 @MainActor
 @Observable
 class CardListViewModel {
-  // Published properties for the View to observe
+
   private(set) var cards: [PokemonCard] = []
   private(set) var loadingState: LoadingState = .idle
   private(set) var errorMessage: String?
@@ -55,7 +55,7 @@ class CardListViewModel {
 
     queryRequestPublisher
       .removeDuplicates()
-      .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+      .debounce(for: .milliseconds(200), scheduler: DispatchQueue.main)
       .sink { [weak self] query in
         self?.fetchCards(query: query)
       }
@@ -65,8 +65,6 @@ class CardListViewModel {
   func requestQuery(query: String) {
     queryRequestPublisher.send(query)
   }
-
-  // MARK: - Public Methods
 
   func onViewAppeared() {
     if case .idle = loadingState, cards.isEmpty {
@@ -155,7 +153,6 @@ class CardListViewModel {
         self.currentSortField = selectedSortField
         self.currentSortOrder = selectedSortOrder
       } catch {
-        // TODO: Improve error handling on loading more cards
         self.errorMessage = error.localizedDescription
         self.loadingState = .error(error)
       }

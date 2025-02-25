@@ -42,7 +42,6 @@ enum APIEndpoint {
 
       queryItems.append(URLQueryItem(name: "sort:field", value: sortField.rawValue))
       queryItems.append(URLQueryItem(name: "sort:order", value: sortOrder.rawValue.uppercased()))
-      // queryItems.append(URLQueryItem(name: "effect", value: "null:"))
 
       if let pagination = pagination {
         queryItems.append(contentsOf: pagination.queryItems)
