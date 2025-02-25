@@ -82,7 +82,7 @@ class CardListViewModel {
 
   func loadMoreCards() {
     if hasMorePages {
-      fetchNextPage(query: searchQuery)
+      fetchCards(query: searchQuery, loadMore: true)
     }
   }
 
@@ -90,7 +90,7 @@ class CardListViewModel {
     eventPublisher.send(.showCardDetails(card: card))
   }
 
-  private func canFetchCards(query: String, loadMore: Bool = false) -> Bool {
+  private func canFetchCards(query: String, loadMore: Bool) -> Bool {
     switch loadingState {
     case .loading:
       return false
@@ -103,23 +103,30 @@ class CardListViewModel {
         || self.currentSortOrder != selectedSortOrder
     }
   }
-  private func fetchCards(query: String) {
-    guard canFetchCards(query: query) else { return }
+  private func fetchCards(query: String, loadMore: Bool = false) {
+    guard canFetchCards(query: query, loadMore: loadMore) else { return }
     self.loadingState = .loading
     self.errorMessage = nil
-    self.cards = []
-    self.currentPage = 1
-    self.hasMorePages = true
+    if !loadMore {
+      self.cards = []
+      self.currentPage = 1
+      self.hasMorePages = true
+    }
+    let nextPage = loadMore ? currentPage + 1 : 1
     Task {
       do {
         let cards = try await apiClient.fetchCards(
           query: query,
-          pagination: PaginationRequest(page: currentPage, itemsPerPage: pageSize),
+          pagination: PaginationRequest(page: nextPage, itemsPerPage: pageSize),
           sortField: selectedSortField,
           sortOrder: selectedSortOrder
         )
-        self.cards = cards.items
-        self.currentPage = 1
+        if loadMore {
+          self.cards.append(contentsOf: cards.items)
+        } else {
+          self.cards = cards.items
+        }
+        self.currentPage = nextPage
         self.hasMorePages = cards.items.count == pageSize
         self.loadingState = .loaded
         self.searchQuery = query
@@ -131,32 +138,4 @@ class CardListViewModel {
       }
     }
   }
-
-  private func fetchNextPage(query: String) {
-    guard canFetchCards(query: query, loadMore: true) else { return }
-    self.loadingState = .loading
-    self.errorMessage = nil
-
-    Task {
-      do {
-        let cards = try await apiClient.fetchCards(
-          query: query,
-          pagination: PaginationRequest(page: currentPage + 1, itemsPerPage: pageSize),
-          sortField: selectedSortField,
-          sortOrder: selectedSortOrder
-        )
-        self.cards.append(contentsOf: cards.items)
-        self.currentPage += 1
-        self.hasMorePages = cards.items.count == pageSize
-        self.loadingState = .loaded
-        self.searchQuery = query
-        self.currentSortField = selectedSortField
-        self.currentSortOrder = selectedSortOrder
-      } catch {
-        self.errorMessage = error.localizedDescription
-        self.loadingState = .error(error)
-      }
-    }
-  }
-
 }
