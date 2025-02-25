@@ -6,8 +6,6 @@ struct CardListView: View {
   @State private var searchQuery: String = ""
   @State private var showNoResults: Bool = false
   @State private var isLoading: Bool = false
-  @State private var isDisabled: Bool = false
-  @FocusState private var isFocused: Bool
 
   init(viewModel: CardListViewModel) {
     self._viewModel = State(initialValue: viewModel)
@@ -16,10 +14,10 @@ struct CardListView: View {
   var body: some View {
     VStack {
       filterView
-        .disabled(isDisabled)
-        .padding(.horizontal)
+      searchbar
       cardList
     }
+    .padding(.horizontal)
     .overlay(showNoResults ? noResults : nil)
     .overlay {
       if let errorMessage = viewModel.errorMessage {
@@ -38,33 +36,21 @@ struct CardListView: View {
       }
     }
     .navigationTitle("Pokemon Cards")
-    .searchable(text: $searchQuery, prompt: "Search by name...")
-    .onChange(of: searchQuery) { oldValue, newValue in
-      guard oldValue != newValue else { return }
-      viewModel.requestQuery(query: newValue)
-    }
     .onChange(of: viewModel.loadingState) { _, newValue in
       switch newValue {
       case .loaded:
         showNoResults = viewModel.cards.isEmpty && !searchQuery.isEmpty
         isLoading = false
-        isDisabled = showNoResults
       case .loading:
         isLoading = true
-        isDisabled = true
         showNoResults = false
       case .error, .idle:
         isLoading = false
-        isDisabled = false
         showNoResults = false
       }
     }
     .onAppear {
       viewModel.onViewAppeared()
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-        isFocused = true
-        isFocused = false
-      }
     }
   }
 
@@ -92,12 +78,12 @@ struct CardListView: View {
             }
         }
       }
-      .padding()
       if isLoading && !viewModel.cards.isEmpty {
         ProgressView()
           .padding()
       }
     }
+    .scrollDismissesKeyboard(.immediately)
   }
 
   private var filterView: some View {
@@ -115,6 +101,18 @@ struct CardListView: View {
       }
       .pickerStyle(.segmented)
     }
+  }
+
+  private var searchbar: some View {
+    SearchBar(
+      text: $searchQuery,
+      onTextChanged: { query in
+        viewModel.requestQuery(query: query)
+      }
+    )
+    .submitLabel(.search)
+    .autocapitalization(.none)
+    .autocorrectionDisabled()
   }
 }
 
